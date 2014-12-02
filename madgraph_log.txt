@@ -1,0 +1,250 @@
+##Script started on Tue Dec  2 13:12:52 2014
+
+##Un-tar directory and look around 
+
+bash-3.2$ tar xzf MG_mini_Rad.tar.gz 
+bash-3.2$ cd MG_mini_Rad
+bash-3.2$ ls
+DECAY		MGMEVersion.txt	Models		UpdateNotes.txt	apRad		makefile
+HELAS		MadGraphII	Template	__MACOSX	madgraph.log	status
+bash-3.2$ cd apRad
+bash-3.2$ ls
+CREATED				bin				numdiag
+Cards				dontinclude			proc_log.txt
+Events				exclude~			proc_log.txt~
+HTML				index.html			refine2
+MGMEVersion.txt			lib				run4
+README				madevent.tar.gz			run4~
+RunWeb				makefile			run_card.dat
+Source				mine.tar.gz			runmany2
+SubProcesses			myprocid			status
+TemplateVersion.txt		ntoro@noric.slac.stanford.edu
+bash-3.2$ ./bin/clean
+Cleaning  SubProcesses. 
+Cleaning Source:
+Cleaning lib:
+Cleaning bin:
+bash-3.2$ ls bin/
+PassToMadWeight		gen_infohtml-pl		put_banner		run_hep2lhe
+TheChopper-pl		gen_jpeg-pl		qdeljob			run_pgs
+addmasses.py		generate_events		qholdjob		run_pythia
+addvertex.pl		generate_events~	qrlsjob			setup_model-pl
+addvertex.pl~		gridrun			qsub			split_banner.pl
+calculate_crossx	merge.pl		refine			standalone
+clean			monitor			refine4grid		standalone_dipole
+clean4grid		multi_run		remove			store
+combine_events		newprocess		replace.pl		store4grid
+compile			newprocess_dip		restore_data		sumall
+cpall			newprocess_sa		rmrun			survey
+extract_banner-pl	plot			run.sh			survey~
+gen_cardhtml-pl		plot_page-pl		run_combine
+gen_crossxhtml-pl	plot_pypage-pl		run_combine~
+bash-3.2$ ls Cards/*card.dat
+Cards/grid_card.dat	Cards/plot_card.dat	Cards/run_card.dat
+Cards/param_card.dat	Cards/proc_card.dat
+
+## Change some settings for a quick test run
+
+bash-3.2$ grep nevent Cards/run_card.dat
+   10000      = nevents ! Number of unweighted events requested 
+bash-3.2$ emacs -nw Cards/run_card.dat
+
+[[[ edit the file so that nevents is 1000, for a faster trial run ]]]
+
+bash-3.2$ grep nevent Cards/run_card.dat
+    1000      = nevents ! Number of unweighted events requested 
+
+## Try a quick test run; you might get an error message, see below
+
+bash-3.2$ ./bin/generate_events 0 test_rad
+Tue  2 Dec 2014 13:14:50 EST
+Generating 1000 events
+Cleaning  SubProcesses. 
+Cleaning Source:
+Cleaning lib:
+Cleaning bin:
+Compiling libraries
+make: f77: No such file or directory
+make: *** [sum_html.o] Error 1
+Working on subprocess:
+    P3_e-n+_e-n+f+f-    make: f77: No such file or directory
+make: *** [symmetry.o] Error 1
+chmod: ajob*: No such file or directory
+make: f77: No such file or directory
+make: *** [driver.o] Error 1
+running ajob*
+nice: ./ajob*: No such file or directory
+
+real	0m0.003s
+user	0m0.001s
+sys	0m0.001s
+Using random number seed offset =  232
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad/bin/refine: line 101: ../bin/sum_html: No such file or directory
+../bin/sumall: line 26: ../../bin/sum_html: No such file or directory
+../bin/sumall: line 29: ../bin/sum_html: No such file or directory
+Using random number seed offset =  232
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad/bin/refine: line 101: ../bin/sum_html: No such file or directory
+../bin/sumall: line 26: ../../bin/sum_html: No such file or directory
+../bin/sumall: line 29: ../bin/sum_html: No such file or directory
+Combining Events
+f77 -g -ffixed-line-length-132 -c combine_events.f
+make: f77: No such file or directory
+make: *** [combine_events.o] Error 1
+dyld: Library not loaded: /usr/local/lib/libg2c.0.dylib
+  Referenced from: /Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad/SubProcesses/../bin/combine_events
+  Reason: image not found
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad/bin/run_combine: line 27: 17586 Trace/BPT trap: 5       ../bin/combine_events
+mv: rename events.lhe to ../Events/events.lhe: No such file or directory
+mv: rename unweighted_events.lhe to ../Events/unweighted_events.lhe: No such file or directory
+putting the banner
+cat: events.lhe: No such file or directory
+cat: unweighted_events.lhe: No such file or directory
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+Tue  2 Dec 2014 13:14:50 EST
+
+## Fix the problem by creating a fake f77 compiler
+
+bash-3.2$ ln -s /usr/local/bin/gfortran  ~/bin/f77
+bash-3.2$ export PATH=${PATH}:~/bin/
+
+## This is what a good run looks like
+
+bash-3.2$ ./bin/generate_events 0 test_rad
+Tue  2 Dec 2014 13:16:20 EST
+Generating 1000 events
+Cleaning  SubProcesses. 
+Cleaning Source:
+Cleaning lib:
+Cleaning bin:
+Compiling libraries
+Working on subprocess:
+    P3_e-n+_e-n+f+f-    genps.f:54.53:
+
+      call gen_mom(iconfig,mincfig,maxcfig,invar,wgt,x,p)                      
+                                                     1
+Warning: Actual argument contains too few elements for dummy argument 'x' (25/50) at (1)
+running ajob1
+ajob1
+1
+../madevent > run1_app.log <input_app.txt 
+
+real	0m1.098s
+user	0m1.090s
+sys	0m0.006s
+2
+../madevent > run1_app.log <input_app.txt 
+
+real	0m0.355s
+user	0m0.349s
+sys	0m0.004s
+
+real	0m1.488s
+user	0m1.456s
+sys	0m0.028s
+Using random number seed offset =  233
+P3_e-n+_e-n+f+f-
+
+real	0m18.545s
+user	0m18.392s
+sys	0m0.117s
+
+real	0m20.468s
+user	0m20.272s
+sys	0m0.181s
+     3_e-n+_e-n+f+f-    0.25035E+07
+           1   19789.000000000000        0.0000000000000000     
+ Results   2503500.0000000000        19789.000000000000            43494   32622.315391472897     
+ Updated results in file results.html
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+     3_e-n+_e-n+f+f-    0.25035E+07
+           1   19789.000000000000        0.0000000000000000     
+ Results   2503500.0000000000        19789.000000000000            43494   32622.315391472897     
+ Updated results in file results.html
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+Using random number seed offset =  233
+P3_e-n+_e-n+f+f-
+
+real	0m11.052s
+user	0m10.950s
+sys	0m0.090s
+     3_e-n+_e-n+f+f-    0.24864E+07
+           1   22755.000000000000        0.0000000000000000     
+ Results   2486400.0000000000        22755.000000000000            29948   36038.490017243792     
+ Updated results in file results.html
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+     3_e-n+_e-n+f+f-    0.24864E+07
+           1   22755.000000000000        0.0000000000000000     
+ Results   2486400.0000000000        22755.000000000000            29948   36038.490017243792     
+ Updated results in file results.html
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG
+Combining Events
+f77 -g -ffixed-line-length-132 -c combine_events.f
+f77 -g -ffixed-line-length-132 -o combine_events combine_events.o  rw_events.o ranmar.o  kin_functions.o open_file.o rw_routines.o alfas_functions.o setrun.o ../lib//libmodel.a ../lib//libpdf.a 
+mv combine_events ../bin/
+ No PDF is used, alpha_s(MZ) from param_card is used
+ Value of alpha_s from param_card:   0.11799999999999999     
+ The default order of alpha_s running is fixed to            2
+ Results.dat xsec =    2486400.0000000000     
+ Found            1  subprocesses
+ SubProcess/Channel     kept   read   xsec 
+P3_e-n+_e-n+f+f-/G1/    1622    1622 0.119E+07
+P3_e-n+_e-n+f+f-/G2/    2864    2864 0.249E+07
+ Iteration            1  too few events    1.1058581737000842E-003         998
+ Found         1089  events writing first         1000
+ Unweighting selected         1000  events.
+Truncated  0.13% of cross section
+putting the banner
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+P3_e-n+_e-n+f+f-
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+/Users/Natalia/physics/APEX/git/apexSearchTools/MG_mini_Rad/apRad
+Tue  2 Dec 2014 13:17:36 EST
+
+## Now you have three new files
+
+bash-3.2$ ls Events/
+banner_header.txt			test_rad_banner.txt
+test_rad_events.lhe.gz			test_rad_unweighted_events.lhe.gz
+
+## These are the lines that control cuts applied at event-generation level>...
+
+bash-3.2$ head -n 101 MG_mini_Rad/apRad/Cards/run_card.dat | tail -n 28
+
+#*******************                                                 
+# Fixed-Target Cuts
+#*******************                                                 
+#
+ 0.5 = ef        ! minimum E for all f's
+ 100.0 = efmax     ! maximum E for all f's
+ 0.0 = thetafmin ! min angle for both f's
+ 100.0 = thetafmax ! max angle for both f's
+ 0.010 = thetaxfmin ! min angle (x direction) for both f's
+ 100.0 = thetaxfmax ! max angle (x direction) for both f's 
+ 0.0 = thetayfmin ! min angle (y direction) for both f's
+ 100.0 = thetayfmax ! max angle (y direction) for both f's 
+ 0.0 = xthetaxfmin ! min angle (x direction) for >=1 f's
+ 100.0 = xthetaxfmax ! max angle (x direction) for >=1 f's 
+ 0.0 = xthetayfmin ! min angle (y direction) for >=1 f's
+ 100.0 = xthetayfmax ! max angle (y direction) for >=1 f's 
+ 0.020 = mmff      ! min invariant mass of f+f- lepton pair
+ 100.0 = mmffmax  ! max invariant mass of f+f- lepton pair
+ 0.0 = xef       ! min. energy for at least one f
+ 0d0 = xthetaf   ! minimum angle for at least one f
+ 0.0 = eftot     ! minimum energy for the two f's
+ 0d0 = efrat     ! min. ratio Emin/Emax for the two f's
+ 0.0  = el     !!! 0.2 = el  !!! was 0.05 with normal cuts! minimum E for the charged leptons 
+ 0.0  = drll  !!! was 0.1  ! min distance between leptons 
+ 0.0  = mmll    ! min invariant mass of l+l- (same flavour) lepton pair
+
+#
+#*******************                                                 
+bash-3.2$ exit
+exit
+
