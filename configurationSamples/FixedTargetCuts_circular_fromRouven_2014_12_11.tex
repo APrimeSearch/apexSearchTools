@@ -1,0 +1,31 @@
+# these cuts are appropriate for 2.262 GeV beam energy.  
+# The ef, xef, efmax, and mmff values should be scaled in proportion to beam energies
+
+
+#*******************                                                 
+# Fixed-Target Cuts
+#*******************
+#
+ 1.000 = ef        ! minimum E for f+ and at least one f-
+ 1.300 = efmax     ! maximum E for f+ and at least one f-
+ 0.055 = thetafmin ! min angle (radial direction) for f+ and at least one f-
+ 0.130 = thetafmax ! max angle (radial direction) for f+ and at least one f-
+ 0.000 = thetaxfmin ! min angle (x direction) for f+ and at least one f-
+ 100.0 = thetaxfmax ! max angle (x direction) for f+ and at least one f-
+ 0.000 = thetayfmin ! min angle (y direction) for f+ and at least one f-
+ 100.0 = thetayfmax ! max angle (y direction) for f+ and at least one f-
+ 0.0 = xthetaxfmin ! min angle (x direction) for >=1 f's
+ 100.0 = xthetaxfmax ! max angle (x direction) for >=1 f's
+ 0.0 = xthetayfmin ! min angle (y direction) for >=1 f's
+ 100.0 = xthetayfmax ! max angle (y direction) for >=1 f's
+ 0.100 = mmff      ! min invariant mass of at least one f+f- lepton pair
+ 100.0 = mmffmax  ! max invariant mass of at least one f+f- lepton pair
+ 0.0 = xef       ! min. energy for at least one f
+ 0d0 = xthetaf   ! minimum angle for at least one f
+ 0.0 = eftot     ! minimum energy for f+ plus at least one f-
+ 0d0 = efrat     ! min. ratio Emin/Emax for the two f's (**NOT IMPLEMENTED**)
+ 0.0  = el     !!! 0.2 = el  !!! was 0.05 with normal cuts! minimum E for the charged leptons
+ 0.0  = drll  !!! was 0.1  ! min distance between leptons
+ 0.0  = mmll    ! min invariant mass of l+l- (same flavour) lepton pair
+
+
