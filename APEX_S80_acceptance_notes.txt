@@ -1,0 +1,67 @@
+Bogdan suggested the following procedure for estimating vertical and horiziontal angle acceptance.  I've added a few clarifications.
+
+For every \delta (+/- 0.045) and z_target there is a value
+of \Omega ~ 4 msr listed in the table on page 1.
+
+For each z_target we can approximate the acceptance as a square region as follows:
+The range_theta_h = integral/value_max, e.g. 4.2-6.3 deg for z_t=0
+(central value of theta_h given as avg. of distribution)
+
+The range_theta_v = \Omega/range_theta_h -- it varies with \delta and z_t.
+
+Every event within the range_v and range_h is accepted.
+
+Best,
+
+Bogdan
+
+
+----- Original Message -----
+From: "Natalia Toro" <ntoro@perimeterinstitute.ca>
+To: "Bogdan Wojtsekhowski" <bogdanw@jlab.org>
+Cc: "Rouven Essig" <rouven.essig@stonybrook.edu>, "Philip Schuster" <pschuster@perimeterinstitute.ca>
+Sent: Monday, October 28, 2013 11:01:18 PM
+Subject: Re: septa
+
+
+
+Hi Bogdan,
+
+A question about John's acceptance results: it seems that the most direct translation of John's calculation into a reach is using the figure on page 2, but there are a few things I'm not sure of. What number on the y-axis of that figure corresponds to 100% efficiency for detecting tracks from a given zbeam, at a given angle (provided they are within the momentum and vertical-angle acceptance of the spectrometer)? And, when the curve is below its maximum, what does this mean? Is there only a subset of momenta that fall within spectrometer acceptance? Only a subset of vertical angles?
+
+
+I will meet with James again to discuss the reach calculation in the next couple of days; this is the one piece of information that I'm not sure how to use properly.
+
+
+Thanks,
+Natalia
+
+
+
+
+On Tue, Sep 17, 2013 at 12:51 PM, Bogdan Wojtsekhowski < bogdanw@jlab.org > wrote:
+
+
+Looks good!
+
+----- Forwarded Message -----
+From: "John LeRose" < lerose@jlab.org >
+To: "Bogdan Wojtsekhowski" < bogdanw@jlab.org >
+Sent: Tuesday, September 17, 2013 12:49:19 PM
+Subject: Re: septa
+
+Hi Bogdan,
+In fact, I just finished them.
+
+-JJL
+
+----- Original Message -----
+| Hi John,
+|
+| I am wondering if you have new acceptance results
+| for the final field/aperture of the septa.
+| Thank you,
+|
+| Bogdan
+|
+
