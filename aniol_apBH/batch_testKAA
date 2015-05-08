@@ -1,0 +1,4 @@
+PROJECT: a-apex
+TRACK: simulation
+COMMAND: /w/halla-scifs1a/apex/MadGraph/MG_mini_BH/apBH/time_events
+JOBNAME: test_batchKAA

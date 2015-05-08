@@ -1,0 +1,10 @@
+rm *events.start
+rm *events.stop
+date > 10000events.start
+ln -s/usr/bin/gfortran ./f77
+export PATH=${PWD}:$PATH
+/w/halla-scifs1a/apex/MadGraph/MG_mini_BH/apBH/bin/generate_events 0 batch-jobKAA
+date > 10000events.stop
+echo time for 10000 events
+cat 10000events.start
+cat 10000events.stop
